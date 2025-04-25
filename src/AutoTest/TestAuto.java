@@ -1,20 +1,15 @@
-package AutoTest;
-
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-
 import model.Auto;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-public class TestAuto {
-
+class TestAuto {
     @Test
-    void testDemarrer() {
+    void testDemarrerDeuxFoisLanceException() {
         Auto auto = new Auto();
-        assertFalse(auto.estDemarre());
-        auto.demarrer();
-        assertTrue(auto.estDemarre());
+        auto.demarrer(); // premier démarrage OK
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            auto.demarrer(); // deuxième démarrage doit lancer l’exception
+        });
+        assertEquals("Auto est déjà démarré(e)", exception.getMessage());
     }
 }
